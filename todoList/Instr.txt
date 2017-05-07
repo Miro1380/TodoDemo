@@ -1,0 +1,29 @@
+To run mongoDb from current directory use command:(Initialize the DB)
+'./mongod' (once inside mongo\bin. HAVE to be in mongoDB/bin folder) ??? or 
+
+-------------
+To actually use DB use the command './mongo' to use the DB that's already started
+
+-------------
+
+show dbs shows databases.
+use (possibly prefix db.)'databasename' to use it or create it ???
+db.'databasename'.find().pretty() shows database in a readable fashion.
+To save the database it has to have at least one record in it? 
+Otherwise will save record in temp db.
+Example of insertion of record--
+---> db.contactlist.insert({name:'Tom', email:'tom@email.com', number:'(444)444-4444'})
+
+
+create server using node js
+in MEAN example used "node server"
+refering to the js file named server.
+
+db.aboutme.insert({type:'edu', school: 'Cal State LA', degree: 'Bachelor of Science ',last_year:'2017'})
+
+db.aboutme.insert({type:'skill', skill: 'MEAN apprentice'})
+
+//Dummy Data
+db.aboutme.insert({type:'skill', skill: 'Java'})
+
+db.aboutme.insert({type:'project', title: 'JaCop', desc:'Constraint Programming Solution'})
