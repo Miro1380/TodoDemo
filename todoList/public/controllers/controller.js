@@ -7,6 +7,10 @@ myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
     $http.get('/todoList').success(function (response) {
       console.log("I got the data I requested");
       $scope.todoList = response;
+      $scope.total = response.length;
+      $scope.remaining = response.filter(function(todo) {
+        return todo.done == false;
+    }).length;
       $scope.todo = "";
     });
   };
@@ -17,7 +21,7 @@ myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $scope.addTodo = function () {
     console.log($scope.todo);
-    $scope.todo.complete = false;
+    $scope.todo.done = false;
     $http.post('/todoList', $scope.todo).success(function (response) {
       console.log(response);
       refresh();
@@ -51,20 +55,35 @@ myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
     $scope.todo = "";
   }
 
-  $scope.complete = function (todo) {
-    console.log("In Complete: ", todo);
-    //console.log
-    if (todo.complete == "true") {
-      console.log("In True.Set to false.");
-      todo.complete = false;
-    }
-    else {
-      console.log("In False. Set to true.");
-      todo.complete = true;
-    }
-    $http.put('/todoList' + todo._id, todo).success(function (response) {
+  $scope.markDone = function (id) {
+    console.log("Mark Done: ", id);
+    $http.get('/todoList/' + id).success(function (response) {
+      console.log("In Edit");
+      $scope.todo = response;
+      $scope.todo.done = true;
+      $http.put('/todoList/' + $scope.todo._id, $scope.todo).success(function (response2) {
+      	refresh();
+    	})
+    });
+  };
+
+  $scope.markNotDone = function (id) {
+    console.log("Mark Not Done: ", id);
+    $http.get('/todoList/' + id).success(function (response) {
+      console.log("In Edit");
+      $scope.todo = response;
+      $scope.todo.done = false;
+      $http.put('/todoList/' + $scope.todo._id, $scope.todo).success(function (response2) {
+      	refresh();
+    	})
+    });
+  };
+
+  $scope.resetTodo = function () {
+    console.log("Reset");
+    $http.delete('/todoList/reset/all').success(function (response) {
       refresh();
-    })
+    });
   };
 
 }]);

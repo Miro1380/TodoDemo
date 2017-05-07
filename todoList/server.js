@@ -43,14 +43,21 @@ app.get('/todoList/:id', function (req, res) {
 
 app.put('/todoList/:id', function (req, res) {
   var id = req.params.id;
-  console.log(req.body.name);
+  console.log(req.body.description);
   db.todoList.findAndModify({
     query: {_id: mongojs.ObjectId(id)},
-    update: {$set: {name: req.body.name, date: req.body.date , complete: req.body.complete}},
+    update: {$set: {description: req.body.description, date: req.body.date , done: req.body.done}},
     new: true}, function (err, doc) {
       res.json(doc);
     }
   );
+});
+
+app.delete('/todoList/reset/all', function (req, res) {
+  console.log('rest remove');
+  db.todoList.remove({}, function (err, doc) {
+    res.json(doc);
+  });
 });
 
 app.listen(8000);
