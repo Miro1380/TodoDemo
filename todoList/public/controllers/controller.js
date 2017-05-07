@@ -1,5 +1,7 @@
 var myApp = angular.module('myApp', ['ngMaterial']);
-myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
+
+myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http, $mdDialog) {
+
   console.log("Hello World from controller");
 
 
@@ -21,11 +23,13 @@ myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
 
   $scope.addTodo = function () {
     console.log($scope.todo);
-    $scope.todo.done = false;
-    $http.post('/todoList', $scope.todo).success(function (response) {
-      console.log(response);
-      refresh();
-    });
+    if($scope.todo.description != null && $scope.todo.date != null){
+      $scope.todo.done = false;
+      $http.post('/todoList', $scope.todo).success(function (response) {
+        console.log(response);
+        refresh();
+      });
+    }
   };
 
   $scope.remove = function (id) {
@@ -85,5 +89,6 @@ myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http) {
       refresh();
     });
   };
+
 
 }]);
