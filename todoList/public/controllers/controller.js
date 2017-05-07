@@ -1,5 +1,7 @@
 var myApp = angular.module('myApp', ['ngMaterial']);
+
 myApp.controller('AppCtrl', ['$scope', '$http', function ($scope, $http, $mdDialog) {
+
   console.log("Hello World from controller");
 
 
